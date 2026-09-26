@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💳 FAHRI STORE — Pembayaran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#050518',
+                        biru: '#2563eb',
+                        merah: '#dc2626',
+                        putih: '#ffffff',
+                        biruTua: '#1e40af',
+                        abuTerang: '#e5e7eb',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-6px)' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .tab-active {
+                background: #2563eb;
+                color: white;
+                transform: scale(1.05);
+                box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+            }
+            .nomor-text {
+                font-size: 1.15rem;
+                font-weight: 800;
+                letter-spacing: 0.5px;
+                color: #ffffff;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-dark min-h-screen font-poppins text-white">
+    <!-- Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-[400px] h-[400px] bg-biru/8 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-merah/8 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
+    </div>
+
+    <div class="relative z-10 container mx-auto px-4 py-8 max-w-lg">
+        
+        <!-- CARD PROFIL -->
+        <div class="bg-biru/10 border-2 border-biru rounded-2xl p-6 text-center mb-8 animate-slide-up">
+            <div class="relative inline-block mb-4">
+                <div class="w-24 h-24 rounded-full border-4 border-merah p-0.5 bg-white/5">
+                    <img src="profil.jpg" alt="FAHRI STORE" class="w-full h-full object-cover rounded-full">
+                </div>
+                <div class="absolute -bottom-1 -right-1 w-7 h-7 bg-green-500 rounded-full flex items-center justify-center border-2 border-dark">
+                    <i class="fa fa-check text-white text-xs"></i>
+                </div>
+            </div>
+            <h1 class="text-3xl font-black font-montserrat text-putih mb-1">FAHRI STORE</h1>
+            <p class="text-abuTerang text-sm">Pilih Metode Pembayaran</p>
+            <div class="w-24 h-1 bg-merah mx-auto mt-3 rounded-full"></div>
+        </div>
+
+        <!-- PILIHAN METODE -->
+        <div class="grid grid-cols-4 gap-2 mb-6 animate-slide-up" style="animation-delay: 0.1s;">
+            <button id="tab-dana" onclick="switchTab('dana')" class="tab-active p-3 rounded-xl transition-all duration-300 font-montserrat font-semibold">
+                <div class="flex flex-col items-center gap-1">
+                    <div class="w-12 h-12 rounded-lg bg-biru/20 flex items-center justify-center text-biru text-xl font-bold">D</div>
+                    <span class="text-xs">DANA</span>
+                </div>
+            </button>
+            <button id="tab-gopay" onclick="switchTab('gopay')" class="bg-white/5 border border-white/20 p-3 rounded-xl transition-all duration-300 hover:bg-white/10">
+                <div class="flex flex-col items-center gap-1">
+                    <div class="w-12 h-12 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-400 text-xl font-bold">G</div>
+                    <span class="text-xs text-gray-300">GoPay</span>
+                </div>
+            </button>
+            <button id="tab-seabank" onclick="switchTab('seabank')" class="bg-white/5 border border-white/20 p-3 rounded-xl transition-all duration-300 hover:bg-white/10">
+                <div class="flex flex-col items-center gap-1">
+                    <div class="w-12 h-12 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400 text-xl font-bold">S</div>
+                    <span class="text-xs text-gray-300">SeaBank</span>
+                </div>
+            </button>
+            <button id="tab-qris" onclick="switchTab('qris')" class="bg-white/5 border border-white/20 p-3 rounded-xl transition-all duration-300 hover:bg-white/10">
+                <div class="flex flex-col items-center gap-1">
+                    <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl"><i class="fa fa-qrcode"></i></div>
+                    <span class="text-xs text-gray-300">QRIS</span>
+                </div>
+            </button>
+        </div>
+
+        <!-- KONTEN PEMBAYARAN -->
+        <div class="animate-slide-up" style="animation-delay: 0.2s;">
+            
+            <!-- ===== DANA ===== -->
+            <div id="content-dana" class="animate-fade-in">
+                <div class="rounded-2xl p-6 text-center" style="background: rgba(37, 99, 235, 0.12); border: 2px solid #2563eb;">
+                    <div class="w-20 h-20 rounded-xl bg-biru flex items-center justify-center text-putih text-3xl font-bold mx-auto mb-4">D</div>
+                    <h3 class="text-xl font-bold font-montserrat text-biru mb-5">DANA</h3>
+                    
+                    <!-- Latar Biru + Nomor Putih -->
+                    <div class="rounded-xl p-4 mb-3" style="background: #2563eb; border: 2px solid #ffffff;">
+                        <p class="text-putih text-sm mb-2 font-medium opacity-90">Nomor DANA</p>
+                        <p class="nomor-text">089531746761</p>
+                    </div>
+                    
+                    <!-- Latar Merah + Nama Putih -->
+                    <div class="rounded-xl p-4 mb-5" style="background: #dc2626; border: 2px solid #ffffff;">
+                        <p class="text-putih text-sm mb-2 font-medium opacity-90">Atas Nama</p>
+                        <p class="text-lg font-bold text-putih">FAHRI AL ANNURJANI</p>
+                    </div>
+                    
+                    <button onclick="salinTeks('089531746761', this)" class="w-full py-3 bg-putih text-biru rounded-xl font-bold text-lg hover:bg-abuterang transition-all active:scale-95">
+                        <i class="fa fa-copy mr-2"></i> Salin Nomor
+                    </button>
+                </div>
+            </div>
+
+            <!-- ===== GoPay ===== -->
+            <div id="content-gopay" class="hidden animate-fade-in">
+                <div class="rounded-2xl p-6 text-center" style="background: rgba(20, 184, 166, 0.12); border: 2px solid #14b8a6;">
+                    <div class="w-20 h-20 rounded-xl bg-teal-500 flex items-center justify-center text-putih text-3xl font-bold mx-auto mb-4">G</div>
+                    <h3 class="text-xl font-bold font-montserrat text-teal-400 mb-5">GoPay</h3>
+                    
+                    <div class="rounded-xl p-4 mb-3" style="background: #14b8a6; border: 2px solid #ffffff;">
+                        <p class="text-putih text-sm mb-2 font-medium opacity-90">Nomor GoPay</p>
+                        <p class="nomor-text">083138272645</p>
+                    </div>
+                    
+                    <div class="rounded-xl p-4 mb-5" style="background: #dc2626; border: 2px solid #ffffff;">
+                        <p class="text-putih text-sm mb-2 font-medium opacity-90">Atas Nama</p>
+                        <p class="text-lg font-bold text-putih">FAHRI AL ANNURJANI</p>
+                    </div>
+                    
+                    <button onclick="salinTeks('083138272645', this)" class="w-full py-3 bg-putih text-teal-500 rounded-xl font-bold text-lg hover:bg-abuterang transition-all active:scale-95">
+                        <i class="fa fa-copy mr-2"></i> Salin Nomor
+                    </button>
+                </div>
+            </div>
+
+            <!-- ===== SeaBank ===== -->
+            <div id="content-seabank" class="hidden animate-fade-in">
+                <div class="rounded-2xl p-6 text-center" style="background: rgba(249, 115, 22, 0.12); border: 2px solid #f97316;">
+                    <div class="w-20 h-20 rounded-xl bg-orange-500 flex items-center justify-center text-putih text-3xl font-bold mx-auto mb-4">S</div>
+                    <h3 class="text-xl font-bold font-montserrat text-orange-400 mb-5">SeaBank</h3>
+                    
+                    <div class="rounded-xl p-4 mb-3" style="background: #f97316; border: 2px solid #ffffff;">
+                        <p class="text-putih text-sm mb-2 font-medium opacity-90">Nomor Rekening</p>
+                        <p class="nomor-text">901864024720</p>
+                    </div>
+                    
+                    <div class="rounded-xl p-4 mb-5" style="background: #dc2626; border: 2px solid #ffffff;">
+                        <p class="text-putih text-sm mb-2 font-medium opacity-90">Atas Nama</p>
+                        <p class="text-lg font-bold text-putih">FAHRI AL ANNURJANI</p>
+                    </div>
+                    
+                    <button onclick="salinTeks('901864024720', this)" class="w-full py-3 bg-putih text-orange-500 rounded-xl font-bold text-lg hover:bg-abuterang transition-all active:scale-95">
+                        <i class="fa fa-copy mr-2"></i> Salin Nomor
+                    </button>
+                </div>
+            </div>
+
+            <!-- ===== QRIS ===== -->
+            <div id="content-qris" class="hidden animate-fade-in">
+                <div class="rounded-2xl p-6 text-center" style="background: rgba(37, 99, 235, 0.12); border: 2px solid #dc2626;">
+                    <div class="w-20 h-20 rounded-xl bg-merah flex items-center justify-center text-putih text-3xl mx-auto mb-4 animate-float">
+                        <i class="fa fa-qrcode"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-montserrat text-merah mb-5">QRIS</h3>
+                    
+                    <div class="bg-putih p-4 rounded-xl mb-4 inline-block border-2 border-biru shadow-lg">
+                        <img src="qris.jpg" alt="QRIS FAHRI STORE" class="w-52 h-52 object-cover rounded-lg">
+                    </div>
+                    
+                    <p class="text-lg font-semibold text-putih mb-5">a.n. FAHRI STORE</p>
+                    
+                    <button onclick="downloadQRIS()" class="w-full py-3 bg-biru text-putih rounded-xl font-bold text-lg hover:bg-biruTua transition-all active:scale-95">
+                        <i class="fa fa-download mr-2"></i> Download QRIS
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- INFO BAWAH -->
+        <div class="text-center mt-6 p-4 rounded-xl border-2 border-putih/30 bg-putih/5 animate-slide-up" style="animation-delay: 0.3s;">
+            <p class="text-sm text-abuTerang"><i class="fa fa-info-circle mr-2 text-biru"></i> Setelah pembayaran, silakan konfirmasi ke WhatsApp Admin</p>
+            <p class="mt-2 text-putih text-sm font-semibold">© 2026 FAHRI STORE</p>
+        </div>
+    </div>
+
+    <!-- NOTIFIKASI -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 px-6 py-3 bg-merah text-putih rounded-full shadow-2xl shadow-merah/30 opacity-0 scale-90 transition-all duration-300 pointer-events-none z-50">
+        <p class="text-sm font-semibold"><i class="fa fa-check-circle mr-2"></i> Berhasil Disalin!</p>
+    </div>
+
+    <script>
+        // Tampilkan DANA secara default
+        document.getElementById('content-dana').classList.remove('hidden');
+
+        // Ganti Tab
+        function switchTab(metode) {
+            const semuaMetode = ['dana', 'gopay', 'seabank', 'qris'];
+            
+            semuaMetode.forEach(m => {
+                document.getElementById(`content-${m}`).classList.add('hidden');
+                document.getElementById(`tab-${m}`).classList.remove('tab-active');
+                document.getElementById(`tab-${m}`).classList.add('bg-white/5', 'border', 'border-white/20');
+                document.getElementById(`tab-${m}`).querySelector('span:last-child').classList.remove('text-white');
+                document.getElementById(`tab-${m}`).querySelector('span:last-child').classList.add('text-gray-300');
+            });
+            
+            document.getElementById(`content-${metode}`).classList.remove('hidden');
+            
+            const tabAktif = document.getElementById(`tab-${metode}`);
+            tabAktif.classList.add('tab-active');
+            tabAktif.classList.remove('bg-white/5', 'border', 'border-white/20');
+            tabAktif.querySelector('span:last-child').classList.remove('text-gray-300');
+            tabAktif.querySelector('span:last-child').classList.add('text-white');
+        }
+
+        // Salin Nomor
+        function salinTeks(teks, btn) {
+            navigator.clipboard.writeText(teks).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('opacity-0', 'scale-90');
+                toast.classList.add('opacity-100', 'scale-100');
+                
+                const asli = btn.innerHTML;
+                btn.innerHTML = '<i class="fa fa-check mr-2"></i> Tersalin!';
+                
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'scale-90');
+                    toast.classList.remove('opacity-100', 'scale-100');
+                    btn.innerHTML = asli;
+                }, 2000);
+            });
+        }
+
+        // Download QRIS
+        function downloadQRIS() {
+            const link = document.createElement('a');
+            link.href = 'qris.jpg';
+            link.download = 'QRIS-FAHRI-STORE.jpg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            const toast = document.getElementById('toast');
+            toast.querySelector('p').innerHTML = '<i class="fa fa-download mr-2"></i> QRIS Sedang Diunduh!';
+            toast.classList.remove('opacity-0', 'scale-90');
+            toast.classList.add('opacity-100', 'scale-100');
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'scale-90');
+                toast.classList.remove('opacity-100', 'scale-100');
+                toast.querySelector('p').innerHTML = '<i class="fa fa-check-circle mr-2"></i> Berhasil Disalin!';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
